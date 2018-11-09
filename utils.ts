@@ -4,44 +4,7 @@ const headers: { [key: string]: string } = {
     'Content-Type': 'application/json'
 };
 
-var obj = {
-    JRequest: new Proxy(
-        {
-            async get<T>(params) {
-                let req = await (fetch(this.url + ((params = qs.stringify(params)) && '?' + params), {
-                    method: 'get',
-                    headers: new Headers(headers)
-                })),
-                    status = (await req.ok);                
-                if (status)
-                    return (await req.json()) as T;
-                else
-                    throw new Error(await req.text());
-            },
-            async post(params) {
-                let req = await (fetch(this.url, {
-                    method: 'post',
-                    body: JSON.stringify(params),
-                    headers: new Headers(headers)
-                })),
-                    status = (await req.ok);
-                if (status)
-                    return (await req.json());
-                else
-                    throw new Error(await req.text());
-            }
-        }, {
-            url: "",
-            get(a: any, b, o) {
-                if (b in a){
-                    let r = a[b].bind({url:this.url});
-                    this.url = "";                
-                    return r;
-                };
-                this.url = this.url + (this.url ? '/' : '') + escape(b.toString());
-                return new Proxy(a, this);
-            }
-        } as any),
+var obj = {    
     JStore: new Proxy(
         {}, 
         {
