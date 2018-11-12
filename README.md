@@ -4,10 +4,10 @@ There's a lot of ways to persist data in browser, but no one with dynamically ac
 ## Usage
 ### Important:
 * Always use **$** prefix for stop reading/writing with chaining-syntax:
-`JStore.storageKey.objectName.$readableKey` for nested-key reading in `storageKey`
-or
-`JStore.$storageKey` 
-* Any attempt to read a key returns the exising value or `undefined`
+
+`JStore.storageKey.objectName.$readableKey`
+
+* Any attempt to read a key returns the existing value or `undefined`
 
 **Root-key reading/writing**
 ```javascript
@@ -16,14 +16,15 @@ let value = JStore.$sampleKey;
 
 JStore.$sampleKey = { a: { nested: { key: "for read/write"} } };
 
-//We are sure we've created this key, so $ symbol is in $sampleKey which returns the stored object.
+//We are sure we've created this key, so $ symbol is in $sampleKey which returns the stored object with his native key-reading.
 value = JStore.$sampleKey.a.nested.key; 
 //returns "for read/write"
 
 //Note that $ symbol is now at the last key
 value = JStore.sampleKey.a.nested.$key; //returns "for read/write"
 ```
-**Infinite deep reading always**
+
+**Infinite deep reading/writing**
 ```javascript
 let aVeryNestedValue = JStore.sampleHashKey['a']['very']['nested']['key']['even']['a']['nonExisting'].$key; 
 
@@ -32,6 +33,7 @@ for(var key of ['a','very','nested','key','even','a','nonExisting'])
   toWrite = toWrite[key];
 toWrite.$value = "the final value"
 ```
+
 **Dynamical reading/writing**
 ```javascript
 let dynamicalKeyedValue = JStore.sampleHashKey.['$' + aPrefixVar + '_key_' + aPostfixVar]; 
