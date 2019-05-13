@@ -12,13 +12,13 @@ There's a lot of ways to persist data in browser, but no one with dynamically ac
 **Root-key reading/writing**
 ```javascript
 let value = JStore.$sampleKey;
-//value = undefined
+//value = {} since JStore.$sampleKey is a root key
 
 JStore.$sampleKey = { a: { nested: { key: "for read/write"} } };
 
-//We are sure we've created this key, so $ symbol is in $sampleKey which returns the stored object with his native key-reading.
+//We are sure we've created this key, so $ symbol is in $sampleKey which returns the stored object .
 value = JStore.$sampleKey.a.nested.key; 
-//returns "for read/write"
+//value = "for read/write"
 
 //Note that $ symbol is now at the last key
 value = JStore.sampleKey.a.nested.$key; //returns "for read/write"
