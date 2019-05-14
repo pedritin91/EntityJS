@@ -1,11 +1,6 @@
 import qs from 'query-string';
-const headers: { [key: string]: string } = {
-    'Accept': `application/json`,
-    'Content-Type': 'application/json'
-};
 
-var obj = {    
-    JStore: new Proxy(
+export const JStore: new Proxy(
         {}, 
         {
             key: "",
@@ -58,4 +53,3 @@ var obj = {
             }
         } as any)
 };
-export default obj;
