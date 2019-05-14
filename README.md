@@ -36,11 +36,11 @@ toWrite.$value = "the final value"
 
 **Dynamical reading/writing**
 ```javascript
-let dynamicalKeyedValue = JStore.sampleHashKey.['$' + aPrefixVar + '_key_' + aPostfixVar]; 
+let dynamicalKeyedValue = JStore.sampleHashKey['$' + aPrefixVar + '_key_' + aPostfixVar]; 
 //returns unefined
-JStore.sampleHashKey.['$' + aPrefixVar + '_key_' + aPostfixVar] = "a value"; 
+JStore.sampleHashKey['$' + aPrefixVar + '_key_' + aPostfixVar] = "a value"; 
 //stores the value at specified path
-dynamicalKeyedValue = JStore.sampleHashKey.['$' + aPrefixVar + '_key_' + aPostfixVar];
+dynamicalKeyedValue = JStore.sampleHashKey['$' + aPrefixVar + '_key_' + aPostfixVar];
 //returns "a value"
 ```
 
