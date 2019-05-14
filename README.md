@@ -26,7 +26,7 @@ value = JStore.sampleKey.a.nested.$key; //returns "for read/write"
 
 **Infinite deep reading/writing**
 ```javascript
-let aVeryNestedValue = JStore.sampleHashKey['a']['very']['nested']['key']['even']['a']['nonExisting'].$key; 
+let aVeryNestedValue = JStore.sampleHashKey['a']['very']['nested']['key']['even']['a']['nonExisting'].$value; 
 
 let toWrite = JStore.sampleHashKey;
 for(var key of ['a','very','nested','key','even','a','nonExisting'])
