@@ -1,5 +1,3 @@
-import qs from 'query-string';
-
 export const JStore: new Proxy(
         {}, 
         {
