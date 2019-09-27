@@ -1,5 +1,5 @@
 # JStore: dynamical persistent object.
-There's a lot of ways to persist data in browser, but no one with dynamically access with chained-object syntax, the further I know. Initially is created to persist data in browser with `localStorage` and built with **Javascript Proxy's API** for dynamical access for stored values.
+There's a lot of ways to persist data in browser, but no one with dynamically access with chained-object syntax, the further I know. Initially is created to persist data in browser with `localStorage` and built with **Javascript Proxy's API** for dynamical access for stored values. Requires `Proxy` object.
 
 ## Usage
 ### Important:
