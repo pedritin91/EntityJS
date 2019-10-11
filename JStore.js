@@ -1,52 +1,29 @@
-export const JStore = new Proxy(
-  {}, 
-  {
-      key: "",
-      path: [],
-      get(r, k, o) {
-          if (!this.key)
-              this.key = k;
-          else if(k.startsWith('$')){
-              this.path.push(k.substring(1));
-              let w = this.$get();
-              this.path = [];
-              this.key = "";
-              obj.JStore = o;
-              return w;
-          }else
-              this.path.push(k);
+const JStore = Vue.prototype.$local = new Proxy(({}), {
+    get(t, kEnd) {
+        if (kEnd[0] == "$") {
+            kEnd = kEnd.substring(1);
+            if (this.instace)
+                return this.instace[kEnd];
+            else if (kEnd in t)
+                return t[kEnd];
+            else
+                return t[kEnd] = (JSON.parse(kEnd in localStorage ? localStorage[kEnd] : localStorage[kEnd] = 'null'));
+        }
+        return new Proxy(t, {
+            ...this, root: this.root || kEnd, instace:
+                this.instace ?
+                    (kEnd in this.instace ? this.instace[kEnd] : this.instace[kEnd]=({})) :
+                    kEnd in t ? t[kEnd] : t[kEnd] = (JSON.parse(kEnd in localStorage ? localStorage[kEnd] : (localStorage[kEnd] = '{}')))
+        });
+    },
 
-          return o
-      },
-      set(r, k, v, o) {
-          if (!this.key)
-              this.key = k;
-          else if(k.startsWith('$')){
-              this.path.push(k.substring(1));
-              let w = this.$set(v);
-              this.path = [];
-              this.key = "";
-              obj.JStore = o;
-              return true;
-          }else
-              this.path.push(k);
-
-          return o
-      },
-      $get() {
-          var r = JSON.parse(localStorage.getItem(this.key)||'{}'),
-              lastKey = this.path.pop();
-          for(let k of this.path)
-              r = (k in r) ? r[k] : {};
-          return r[lastKey];
-      },
-      $set(value) {
-          var original, r = original = JSON.parse(localStorage.getItem(this.key)||'{}'),
-              lastKey = this.path.pop();
-          for(let k of this.path)
-              r = r[k] = (k in r) ? r[k] : {};
-          r[lastKey] = value;
-          localStorage.setItem(this.key, JSON.stringify(original));
-          return r[lastKey];
-      }
-  });
+    set(t, kEnd, v) {
+        if (kEnd[0] == "$") {
+            kEnd = kEnd.substring(1);
+            v = Vue.observable(v);
+            (this.instace || t)[kEnd] = v;
+            localStorage[this.root || kEnd] = JSON.stringify(t[this.root || kEnd]);
+            return true;
+        }
+    }
+});
