@@ -20,7 +20,6 @@ const JStore = Vue.prototype.$local = new Proxy(({}), {
     set(t, kEnd, v) {
         if (kEnd[0] == "$") {
             kEnd = kEnd.substring(1);
-            v = Vue.observable(v);
             (this.instace || t)[kEnd] = v;
             localStorage[this.root || kEnd] = JSON.stringify(t[this.root || kEnd]);
             return true;
